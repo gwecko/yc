@@ -152,8 +152,9 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', {err});
 })
 
-
-const portNumber = 2022;
+// Heroku will provide a process.env.PORT. The app will switch
+// back to 2022 in local
+const portNumber = process.env.PORT || 2022;
 app.listen(portNumber, () => {
     console.log(`Running on port ${portNumber}`);
 })
