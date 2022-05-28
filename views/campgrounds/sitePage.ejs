@@ -1,0 +1,133 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/stylesheets/starRating.css">
+<style>.list-group-item{border: none}</style>
+
+<div class="row my-4">
+    <div class="col-md-6">
+        <!-- Campground card -->
+        <div class="card mb-2">
+            <div class="card-body">
+              <h1 class="card-title"><%= campground.title %></h1>
+              <p class="card-text"><%= campground.description %></p>
+              <p class="text-muted">Submitted by <%= campground.author.username %></p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">$<%= campground.price %> per night</li>
+              <li class="list-group-item"><%= campground.location %></li>
+            </ul>
+            <!-- Edit and Delete buttons -->
+            <% if (currentUser && campground.author.equals(currentUser)) { %>
+            <div class="card-body">
+                <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>/edit" role="button">Edit</a>
+                <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
+                    <button class="btn btn-outline-danger" type="submit">Delete</button>
+                </form>
+            </div> 
+            <% } %> 
+            <!-- END: Edit and delete buttons -->
+        </div>
+        <!-- End: campground card -->
+        <!-- Map -->
+        <div id='map' style='width: 100%; height: 300px;' class="col mb-2"></div>
+        <!-- END: Map (scripts at bottom though) -->
+    </div>
+    <!-- Image carousel -->
+    <div class="col-md-6">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <% campground.images.forEach((image, i)=> { %>
+                    <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                        <img class="d-block w-100" style="border-radius: 5px" src="<%= image.url %>">
+                    </div>
+                    <% }) %>
+            </div>
+            <% if(campground.images.length > 1) { %>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only"></span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only"></span>
+                </a>
+                <% } %>
+        </div>
+        <!-- END: Image carousel -->
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <!-- Review form -->
+        <!-- VALIDATION IS NOT WORKING. The 'novalidate' clause is functioning too well;
+        the 'validated-form' class is not working as intended. Ordering is not the issue.
+        Maybe we need a validate review function? The text area is not supposed to be left
+        empty. -->
+        <% if (currentUser) { %>
+        <h3>Leave a review</h3>
+        <form action="/campgrounds/<%= campground._id %>/reviews" method="post" class="validated-form" novalidate>
+            <div class="mb-1">
+                <div>
+                    <fieldset class="starability-basic">
+                        <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+                        <input type="radio" id="rate1" name="review[rating]" value="1" />
+                        <label for="rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="rate2" name="review[rating]" value="2" />
+                        <label for="rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="rate3" name="review[rating]" value="3" />
+                        <label for="rate3" title="Average">3 stars</label>
+                        <input type="radio" id="rate4" name="review[rating]" value="4" />
+                        <label for="rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="rate5" name="review[rating]" value="5" />
+                        <label for="rate5" title="Amazing">5 stars</label>
+                    </fieldset>
+                </div>
+                <!-- <label class="form-label" for="body">Review</label> -->
+                <textarea class="form-control mb-2" name="review[body]" id="body" cols="30" rows="4" required></textarea>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-info">Submit</button>
+            </div>
+        </form>
+        <% } %>
+        <!-- End: Review form -->
+        <!-- Display reviews -->
+        <h4 class="mb-0"><u>Reviews</u></h4>
+        <% if(!currentUser){ %>
+        <div class="mb-2">
+            <a href="/login">Sign in</a> to leave a review
+        </div>
+        <% } %> 
+        <% for(let review of campground.reviews){ %>
+            <div class="card mb-1">
+                <div class="card-body">
+                <p class="card-title d-inline"><b>Rating:</b></p>
+                <div class='stars-wrapper'>
+                    <% for( let i = 0; i < review?.rating; i++ ) { %>
+                        <div class='star-filled'>&#9733;</div>
+                    <% } %>
+                    <% for( let i = 0; i < 5 - review?.rating; i++ ) { %>
+                        <div class='star-empty'>&#9734;</div>
+                    <% } %>
+                </div>
+                <p class="card-text"><%= review.body %></p>
+                <p class="blockquote-footer"><%= review.author.username %></p>
+                <!-- Delete button -->
+                <% if (currentUser && currentUser.equals(review.author._id)) { %>
+                <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">         
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+                <% } %>
+                <!-- END: Delete button -->
+                </div>
+            </div>
+        <% } %> 
+        <!-- End: Display reviews  -->
+    </div>
+</div>
+
+<script>
+    const mapToken = '<%- process.env.Mapbox_Token %>';
+    const campground = <%- JSON.stringify(campground) %>;
+    console.log(campground);
+</script>
+<script src="/javascripts/sitePageMap.js"></script>

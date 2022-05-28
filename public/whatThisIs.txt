@@ -1,0 +1,2 @@
+This folder ('Public') contains scripts that we use to repsond
+to certain events with.

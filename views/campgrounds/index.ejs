@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate') %>
+<h1>All campgrounds</h1>
+<!-- Map tag (script at bottom)-->
+<div id="map" style="width:100%; height:400px" class="mb-3"></div>
+<!-- END: Map tag -->
+<% for(let campground of campgrounds){ %>
+    <div class="card mb-2">
+        <!-- Card body -->
+        <div class="card-body">
+            <div class="row">
+                <!-- Card image -->
+                <div class="col-md-4">
+                    <% if (campground.images[0]) { %>
+                    <img class="img-fluid" src="<%= campground.images[0].url %>">  
+                    <% } else { %>                    
+                    <p class="text-center">No image</p>
+                    <% } %> 
+                </div>
+                <!-- END Card image -->
+                <!-- Card text  -->
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h4 class="card-title"><%= campground.title %></h4>
+                        <p class="card-text">
+                            <b><%= campground.location %></b>
+                            <br>
+                            $<%= campground.price %>/night 
+                        </p>
+                        <a href="campgrounds/<%= campground._id %>" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+                <!-- END: Card text -->
+            </div>
+        </div>
+        <!-- END: Card body -->
+    </div>
+ <% } %>
+
+
+<script>
+    const mapboxToken = '<%- process.env.Mapbox_Token %>';
+    // The example data was given under the key of 'features' so we maintain that
+    // precedent here; the map doesn't load campground data otherwise.
+    const campgrounds = {features: <%- JSON.stringify(campgrounds) %>};
+</script>
+<script src="/javascripts/clusterMap.js"></script>

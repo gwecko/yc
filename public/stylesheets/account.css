@@ -1,0 +1,29 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+
+form{
+    width: 40vw;
+    min-width: auto;
+    max-width: fill;
+}
+
+.form-label{
+    text-align: left;
+}
+
+h1{
+    text-align: center;
+}
+
+form>div>.btn{
+    width: 50%;
+}
+
+.button-styling{
+    text-align: center;
+}
