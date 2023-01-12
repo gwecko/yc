@@ -18,21 +18,6 @@ module.exports.descriptors = [
     'Sky',
     'Dusty',
     'Diamond',
-    //Extras (:
-    'Horny',
-    'Thirsty', 
-    'Girthy', 
-    'Tight',
-    'Cum', 
-    'Titty',
-    'Bend-over', 
-    'Slut', 
-    'Whore', 
-    'Retard',
-    'Stinky',
-    'Suckdown', 
-    'Hard-on',
-    'Buttstuff'
 ]
 
 module.exports.places = [
@@ -58,12 +43,4 @@ module.exports.places = [
     'Cliffs',
     'Hollow',
     'Outpost',
-    //Extras (:
-    'Bulge',
-    'Asscrack', 
-    'Coochie', 
-    'Shithole', 
-    'Dingaling', 
-    'Boner',
-    'Cheeks'
 ]

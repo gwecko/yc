@@ -9,7 +9,7 @@ const ExpressError = require('./utilities/ExpressError');
 module.exports.validateReview = (req, res, next) => {
     const {error} = reviewSchema.validate(req.body);
     if(error){
-        //Not super sure how this line works
+        // log each error to the client
         const msg = error.details.map(eachElement => eachElement.message).join(',');
         throw new ExpressError(msg, 400);
     } else {
@@ -21,7 +21,7 @@ module.exports.validateReview = (req, res, next) => {
 module.exports.validateCampground = (req, res, next) => {
     const {error} = campgroundSchema.validate(req.body);
     if(error){
-        //Not super sure how this line works
+        // log each error to the client
         const msg = error.details.map(eachElement => eachElement.message).join(',');
         throw new ExpressError(msg, 400);
     } else {
