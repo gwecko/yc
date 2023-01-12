@@ -31,6 +31,11 @@
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^7.0.0",
-    "sanitize-html": "^2.7.0"
+    "path": "^0.12.7",
+    "postcss": "^8.4.21",
+    "sanitize-html": "^2.7.0",
+    "tty": "^1.0.1",
+    "url": "^0.11.0",
+    "vercel": "^28.11.1"
   }
 }
