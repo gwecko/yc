@@ -137,7 +137,7 @@ app.use('/', userRoutes);
 */
 
 app.get('/', (req, res) => {
-    res.render('home');
+    res.render('index');
 })
 
 // Error 404 handler
@@ -154,7 +154,7 @@ app.use((err, req, res, next) => {
 
 // Heroku will provide a process.env.PORT. The app will switch
 // back to 2022 in local
-const portNumber = process.env.PORT || 2022;
+const portNumber = process.env.PORT || 8888;
 app.listen(portNumber, () => {
     console.log(`Running on port ${portNumber}`);
 })

@@ -35,6 +35,7 @@
     "postcss": "^8.4.21",
     "sanitize-html": "^2.7.0",
     "tty": "^1.0.1",
+    "update-notifier": "^6.0.2",
     "url": "^0.11.0",
     "vercel": "^28.11.1"
   }
